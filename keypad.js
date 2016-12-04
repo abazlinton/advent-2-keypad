@@ -1,9 +1,11 @@
-// var pry = require("pryjs");
+var pry = require("pryjs");
 
 
 var Keypad = function(stepsString){
   this.stepsString = stepsString;
   this.steps = [];
+  this.keyPointer = "5";
+  this.code = "";
   this.breakDownStepsString();
   this.keyRouting = new Map();
   this.key1 = new Map();
@@ -22,6 +24,27 @@ Keypad.prototype = {
 
   breakDownStepsString: function(){
     this.steps = this.stepsString.split("\n");
+  },
+
+  followSteps: function(){
+    this.steps.forEach(function(line){
+      this.processLineOfSteps(line);
+    }.bind(this));
+  },
+
+  processLineOfSteps: function(line){
+    var lineMoves = [];
+    for (var i=0; i < line.length; i++){
+      lineMoves.push(line[i]);
+    };
+
+    lineMoves.forEach(function(move){
+      if (this.keyRouting.get(this.keyPointer).get(move) === undefined) {
+        console.log("invalid move, skipping");
+      } else {
+        this.keyPointer = this.keyRouting.get(this.keyPointer).get(move);
+      };
+    }.bind(this));
   },
 
   setupkeyRouting: function(){
@@ -67,7 +90,7 @@ Keypad.prototype = {
     this.keyRouting.set("7", this.key7);
     this.keyRouting.set("8", this.key8);
     this.keyRouting.set("9", this.key9);
-    
+
   }
 
 };

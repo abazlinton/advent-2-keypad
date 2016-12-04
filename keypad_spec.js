@@ -15,12 +15,35 @@ describe("Keypad", function(){
   });
 
   it("can break down stepsString into lines", function(){
-      assert.equal("R", keypad.steps[1][0]);
-      assert.equal("U", keypad.steps[4][0]);
+    assert.equal("R", keypad.steps[1][0]);
+    assert.equal("U", keypad.steps[4][0]);
   });
 
   it("has keyRouting set up", function(){
-      assert.equal("4", keypad.keyRouting.get("1").get("D"));
+    assert.equal("4", keypad.keyRouting.get("1").get("D"));
   });
+
+  it("start pointing at 5", function(){
+    assert.equal("5", keypad.keyPointer);
+  });
+
+  it("can move up to 2", function(){
+    stepsString = "U\n";
+    keypad = new Keypad(stepsString);
+    keypad.followSteps();
+    assert.equal("2", keypad.keyPointer);
+  });
+
+  it("can run a line of steps (simple)", function(){
+    stepsString = "UU\n";
+    keypad = new Keypad(stepsString);
+    // eval(pry.it);
+    keypad.followSteps();
+    assert.equal("2", keypad.keyPointer);
+  });
+
+  // it("will return the same number when an impossible move is requested", function(){
+  //   assert.equal("2", keypad.getNextKey(""));
+  // });
 
 });
