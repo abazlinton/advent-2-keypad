@@ -24,11 +24,14 @@ Keypad.prototype = {
 
   breakDownStepsString: function(){
     this.steps = this.stepsString.split("\n");
+    this.steps.pop();
   },
 
   followSteps: function(){
     this.steps.forEach(function(line){
       this.processLineOfSteps(line);
+      // eval(pry.it);
+      this.code += this.keyPointer;
     }.bind(this));
   },
 
@@ -39,9 +42,7 @@ Keypad.prototype = {
     };
 
     lineMoves.forEach(function(move){
-      if (this.keyRouting.get(this.keyPointer).get(move) === undefined) {
-        console.log("invalid move, skipping");
-      } else {
+      if (this.keyRouting.get(this.keyPointer).get(move) != undefined) {
         this.keyPointer = this.keyRouting.get(this.keyPointer).get(move);
       };
     }.bind(this));
