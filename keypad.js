@@ -42,7 +42,7 @@ Keypad.prototype = {
     };
 
     lineMoves.forEach(function(move){
-      if (this.keyRouting.get(this.keyPointer).get(move) != undefined) {
+      if (this.keyRouting.get(this.keyPointer).get(move) !== undefined) {
         this.keyPointer = this.keyRouting.get(this.keyPointer).get(move);
       };
     }.bind(this));
